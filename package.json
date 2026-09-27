@@ -4,10 +4,11 @@
   "description": "Vitrine de camisetas com redirecionamento para links de afiliado",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js",
-    "seed:admin": "node scripts/create-admin.js"
-  },
+  "start": "node server.js",
+  "migrate": "node scripts/migrate.js",
+  "dev": "node --watch server.js",
+  "seed:admin": "node scripts/create-admin.js"
+},
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",

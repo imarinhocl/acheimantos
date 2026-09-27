@@ -1,0 +1,12 @@
+# URL de conexão do Postgres (Render fornece isso automaticamente no painel do banco)
+DATABASE_URL=postgresql://acheimantos_user:rr33CBobko1ffBYbEaQKMxQeVQtGcGFL@dpg-dasn13t9fdbs73e60q8g-a.oregon-postgres.render.com/acheimantos
+
+# Segredo usado para assinar o cookie de sessão do admin (troque por um valor aleatório longo)
+SESSION_SECRET=troque-isso-por-um-texto-aleatorio-bem-grande
+
+# Porta local (o Render define isso sozinho em produção)
+PORT=3000
+
+# Usados apenas pelo script scripts/create-admin.js para criar o primeiro usuário admin
+ADMIN_USERNAME=imarinhocl
+ADMIN_PASSWORD=Maglor*137982
