@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acheimantos — ache o manto do seu time</title>
+<meta name="description" content="Vitrine de camisetas de time com link direto para comprar no Mercado Livre ou Shopee.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a href="/" class="wordmark">achei<span>mantos</span></a>
+    <nav class="topnav">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#duvidas">Dúvidas e medidas</a>
+      <a href="#reportar">Link caiu?</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero wrap">
+    <h1>Ache o manto do seu<br>time antes que ele<br>suma da timeline.</h1>
+    <p class="hero-sub">Toda camisa que a gente posta fica guardada aqui. Procure pelo nome do time e vá direto pra oferta — sem precisar rolar o Twitter pra trás.</p>
+
+    <form class="search-pill" id="search-form" role="search">
+      <input type="search" id="search-input" placeholder="Busque um time, por exemplo: Flamengo" autocomplete="off">
+      <button type="submit">Buscar</button>
+    </form>
+  </section>
+
+  <section class="products wrap" id="products-section">
+    <div class="products-head">
+      <h2>Camisas disponíveis</h2>
+      <span id="results-count" class="results-count"></span>
+    </div>
+    <div id="products-grid" class="products-grid" aria-live="polite"></div>
+    <p id="empty-state" class="empty-state" hidden>Nenhuma camisa encontrada com esse nome ainda. Tenta buscar de outro jeito ou reporta pra gente ali embaixo.</p>
+  </section>
+
+  <section class="how" id="como-funciona">
+    <div class="wrap">
+      <h2>Como funciona</h2>
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <div>
+            <h3>Você acha a camisa aqui</h3>
+            <p>Todo anúncio que a gente posta no Twitter fica salvo nessa vitrine — pesquisável, sem se perder na timeline.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div>
+            <h3>Você clica em "Ver oferta"</h3>
+            <p>O botão te leva direto pro anúncio no Mercado Livre ou na Shopee, no site oficial deles.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div>
+            <h3>Você compra com o vendedor</h3>
+            <p>A compra, o pagamento e a entrega acontecem inteiramente na plataforma — a gente só ajuda você a achar o produto.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="faq" id="duvidas">
+    <div class="wrap">
+      <h2>Dúvidas e medidas</h2>
+      <div class="faq-list">
+        <details open>
+          <summary>Como sei o tamanho certo?</summary>
+          <p>A tabela de medidas de cada modelo fica na própria página do anúncio, no Mercado Livre ou na Shopee. Em geral as camisas seguem numeração padrão (P, M, G, GG) — em caso de dúvida, meça uma camisa que já veste bem em você e compare com a tabela do anúncio antes de fechar a compra.</p>
+        </details>
+        <details>
+          <summary>Vocês vendem direto?</summary>
+          <p>Não. Esse site só reúne e organiza os anúncios. A venda, o pagamento e a entrega são feitos inteiramente pelo vendedor, dentro do Mercado Livre ou da Shopee.</p>
+        </details>
+        <details>
+          <summary>Quanto tempo demora pra chegar?</summary>
+          <p>O prazo de entrega é o que aparece no próprio anúncio da plataforma, já que quem envia é o vendedor de lá — não a gente.</p>
+        </details>
+        <details>
+          <summary>E se eu tiver algum problema com a compra?</summary>
+          <p>Como a compra acontece dentro do Mercado Livre ou da Shopee, o suporte e a garantia deles é que se aplicam. Fale direto com o vendedor ou abra um chamado na plataforma.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="report" id="reportar">
+    <div class="wrap">
+      <div class="glass report-card">
+        <h2>Achou um link caído?</h2>
+        <p>Se um anúncio sumiu, deu erro ou o link não abre mais, conta pra gente aqui. A gente corrige o quanto antes.</p>
+        <form id="report-form">
+          <label for="report-product">Nome da camisa ou do time</label>
+          <input type="text" id="report-product" name="product_name" required placeholder="Ex: Flamengo 2024 treino">
+          <label for="report-message">O que aconteceu?</label>
+          <textarea id="report-message" name="message" rows="3" placeholder="Ex: o link dá página não encontrada"></textarea>
+          <button type="submit">Enviar reporte</button>
+          <p id="report-status" class="report-status" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>acheimantos.com.br — vitrine independente. As vendas são feitas pelos vendedores no Mercado Livre e na Shopee.</p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

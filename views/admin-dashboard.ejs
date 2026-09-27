@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel — Acheimantos</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a href="/" class="wordmark">achei<span>mantos</span></a>
+    <form method="POST" action="/admin/logout">
+      <button class="logout-btn" type="submit">Sair (<%= username %>)</button>
+    </form>
+  </div>
+</header>
+
+<main class="wrap admin-main">
+
+  <% if (reports.length > 0) { %>
+  <section class="glass admin-panel">
+    <h2>Links reportados (<%= reports.length %>)</h2>
+    <ul class="report-list">
+      <% reports.forEach(function(r) { %>
+        <li>
+          <div>
+            <strong><%= r.product_name_snapshot || 'Produto #' + r.product_id %></strong>
+            <p><%= r.message || 'Sem descrição.' %></p>
+          </div>
+          <form method="POST" action="/admin/reports/<%= r.id %>/resolve">
+            <button type="submit">Marcar resolvido</button>
+          </form>
+        </li>
+      <% }); %>
+    </ul>
+  </section>
+  <% } %>
+
+  <section class="glass admin-panel">
+    <h2>Novo anúncio</h2>
+    <form method="POST" action="/admin/products" class="product-form">
+      <div class="form-row">
+        <label for="name">Nome da camisa</label>
+        <input type="text" id="name" name="name" required placeholder="Ex: Flamengo Home 2024">
+      </div>
+      <div class="form-row">
+        <label for="team">Time</label>
+        <input type="text" id="team" name="team" placeholder="Ex: Flamengo">
+      </div>
+      <div class="form-row">
+        <label for="platform">Plataforma</label>
+        <select id="platform" name="platform" required>
+          <option value="mercadolivre">Mercado Livre</option>
+          <option value="shopee">Shopee</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="affiliate_url">Link de afiliado</label>
+        <input type="url" id="affiliate_url" name="affiliate_url" required placeholder="https://...">
+      </div>
+      <div class="form-row">
+        <label for="image_url">URL da imagem</label>
+        <input type="url" id="image_url" name="image_url" required placeholder="https://...">
+      </div>
+      <div class="form-row">
+        <label for="price">Preço (opcional, só exibição)</label>
+        <input type="number" step="0.01" id="price" name="price" placeholder="Ex: 129.90">
+      </div>
+      <button type="submit">Publicar anúncio</button>
+    </form>
+  </section>
+
+  <section class="glass admin-panel">
+    <h2>Anúncios (<%= products.length %>)</h2>
+    <div class="admin-products">
+      <% products.forEach(function(p) { %>
+        <div class="admin-product-row <%= p.active ? '' : 'inactive' %>">
+          <img src="<%= p.image_url %>" alt="<%= p.name %>">
+          <div class="admin-product-info">
+            <strong><%= p.name %></strong>
+            <span><%= p.team || '—' %> · <%= p.platform %> <%= p.active ? '' : '· inativo' %></span>
+          </div>
+          <div class="admin-product-actions">
+            <form method="POST" action="/admin/products/<%= p.id %>/toggle">
+              <button type="submit"><%= p.active ? 'Desativar' : 'Ativar' %></button>
+            </form>
+            <form method="POST" action="/admin/products/<%= p.id %>/delete" onsubmit="return confirm('Excluir este anúncio?');">
+              <button type="submit" class="danger">Excluir</button>
+            </form>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

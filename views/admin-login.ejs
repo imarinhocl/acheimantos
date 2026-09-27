@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login — Painel Acheimantos</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+  <div class="login-card glass">
+    <h1>Painel Acheimantos</h1>
+    <p class="login-sub">Entre para gerenciar os anúncios.</p>
+    <% if (error) { %>
+      <p class="form-error"><%= error %></p>
+    <% } %>
+    <form method="POST" action="/admin/login">
+      <label for="username">Usuário</label>
+      <input type="text" id="username" name="username" required autofocus>
+      <label for="password">Senha</label>
+      <input type="password" id="password" name="password" required>
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+</body>
+</html>
