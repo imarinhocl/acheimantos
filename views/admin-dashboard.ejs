@@ -85,6 +85,7 @@
             <span><%= p.team || '—' %> · <%= p.platform %> <%= p.active ? '' : '· inativo' %></span>
           </div>
           <div class="admin-product-actions">
+            <a class="edit-link" href="/admin/products/<%= p.id %>/edit">Editar</a>
             <form method="POST" action="/admin/products/<%= p.id %>/toggle">
               <button type="submit"><%= p.active ? 'Desativar' : 'Ativar' %></button>
             </form>

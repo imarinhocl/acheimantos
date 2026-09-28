@@ -102,3 +102,16 @@
   background: rgba(16, 35, 61, 0.08); color: var(--ink);
 }
 .admin-product-actions form button.danger { background: rgba(255,107,74,0.15); color: #b8341a; }
+.edit-link {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+}
+.cancel-link { align-self: center; margin-top: 16px; margin-left: 12px; color: var(--ink-soft); font-size: 0.9rem; }
+.edit-actions { display: flex; align-items: center; }

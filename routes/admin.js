@@ -76,7 +76,36 @@ router.post('/products', requireAuth, async (req, res) => {
     res.redirect('/admin');
   }
 });
+router.get('/products/:id/edit', requireAuth, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM products WHERE id = $1', [req.params.id]);
+    if (!result.rows[0]) return res.redirect('/admin');
+    res.render('admin-edit', { product: result.rows[0] });
+  } catch (err) {
+    console.error('Erro ao carregar anúncio:', err);
+    res.redirect('/admin');
+  }
+});
 
+router.post('/products/:id/edit', requireAuth, async (req, res) => {
+  const { name, team, platform, affiliate_url, image_url, price } = req.body;
+
+  if (!name || !platform || !affiliate_url || !image_url) {
+    return res.redirect(`/admin/products/${req.params.id}/edit`);
+  }
+
+  try {
+    await pool.query(
+      `UPDATE products
+       SET name = $1, team = $2, platform = $3, affiliate_url = $4, image_url = $5, price = $6
+       WHERE id = $7`,
+      [name, team || null, platform, affiliate_url, image_url, price || null, req.params.id]
+    );
+  } catch (err) {
+    console.error('Erro ao editar anúncio:', err);
+  }
+  res.redirect('/admin');
+});
 router.post('/products/:id/toggle', requireAuth, async (req, res) => {
   try {
     await pool.query(
