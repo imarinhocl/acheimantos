@@ -29,15 +29,23 @@
         <input type="text" id="team" name="team" value="<%= product.team || '' %>">
       </div>
       <div class="form-row">
-        <label for="platform">Plataforma</label>
-        <select id="platform" name="platform" required>
-          <option value="mercadolivre" <%= product.platform === 'mercadolivre' ? 'selected' : '' %>>Mercado Livre</option>
-          <option value="shopee" <%= product.platform === 'shopee' ? 'selected' : '' %>>Shopee</option>
+        <label for="category">Categoria</label>
+        <select id="category" name="category">
+          <option value="" <%= !product.category ? 'selected' : '' %>>Sem categoria</option>
+          <option value="brasileirao" <%= product.category === 'brasileirao' ? 'selected' : '' %>>Campeonato Brasileiro</option>
+          <option value="europa" <%= product.category === 'europa' ? 'selected' : '' %>>Ligas europeias</option>
+          <option value="selecoes" <%= product.category === 'selecoes' ? 'selected' : '' %>>Seleções</option>
+          <option value="outros" <%= product.category === 'outros' ? 'selected' : '' %>>Outros</option>
         </select>
       </div>
+      <p class="field-hint">Preencha o link de pelo menos uma plataforma (pode preencher as duas). Deixar em branco remove o link daquela plataforma.</p>
       <div class="form-row">
-        <label for="affiliate_url">Link de afiliado</label>
-        <input type="url" id="affiliate_url" name="affiliate_url" required value="<%= product.affiliate_url %>">
+        <label for="mercadolivre_url">Link Mercado Livre</label>
+        <input type="url" id="mercadolivre_url" name="mercadolivre_url" value="<%= links.mercadolivre || '' %>" placeholder="https://...">
+      </div>
+      <div class="form-row">
+        <label for="shopee_url">Link Shopee</label>
+        <input type="url" id="shopee_url" name="shopee_url" value="<%= links.shopee || '' %>" placeholder="https://...">
       </div>
       <div class="form-row">
         <label for="image_url">URL da imagem</label>

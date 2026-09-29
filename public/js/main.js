@@ -3,11 +3,14 @@ const emptyState = document.getElementById('empty-state');
 const resultsCount = document.getElementById('results-count');
 const searchForm = document.getElementById('search-form');
 const searchInput = document.getElementById('search-input');
+const categoryTabs = document.getElementById('category-tabs');
 
-const platformLabel = {
-  mercadolivre: 'Mercado Livre',
-  shopee: 'Shopee'
+const platformInfo = {
+  mercadolivre: { label: 'Mercado Livre', className: 'link-ml' },
+  shopee: { label: 'Shopee', className: 'link-shopee' }
 };
+
+let activeCategory = '';
 
 function renderProducts(products) {
   grid.innerHTML = '';
@@ -26,13 +29,20 @@ function renderProducts(products) {
   products.forEach((p) => {
     const card = document.createElement('article');
     card.className = 'product-card';
+
+    const linksHtml = (p.links || [])
+      .map((link) => {
+        const info = platformInfo[link.platform] || { label: link.platform, className: '' };
+        return `<a class="product-cta ${info.className}" href="/ir/${link.id}" target="_blank" rel="noopener sponsored">${info.label}</a>`;
+      })
+      .join('');
+
     card.innerHTML = `
       <img src="${p.image_url}" alt="${p.name}" loading="lazy">
       <div class="product-body">
         ${p.team ? `<span class="product-team">${p.team}</span>` : ''}
         <span class="product-name">${p.name}</span>
-        <span class="product-meta">Via ${platformLabel[p.platform] || p.platform}</span>
-        <a class="product-cta" href="${p.affiliate_url}" target="_blank" rel="noopener sponsored">Ver oferta</a>
+        <div class="product-links">${linksHtml || '<span class="product-meta">Sem link disponível</span>'}</div>
       </div>
     `;
     frag.appendChild(card);
@@ -43,7 +53,11 @@ function renderProducts(products) {
 
 async function loadProducts(search = '') {
   try {
-    const res = await fetch(`/api/products${search ? `?search=${encodeURIComponent(search)}` : ''}`);
+    const params = new URLSearchParams();
+    if (search) params.set('search', search);
+    if (activeCategory) params.set('category', activeCategory);
+
+    const res = await fetch(`/api/products${params.toString() ? `?${params}` : ''}`);
     const data = await res.json();
     renderProducts(data);
   } catch (err) {
@@ -64,6 +78,16 @@ searchInput.addEventListener('input', () => {
 searchForm.addEventListener('submit', (e) => {
   e.preventDefault();
   clearTimeout(debounceTimer);
+  loadProducts(searchInput.value.trim());
+});
+
+categoryTabs.addEventListener('click', (e) => {
+  const btn = e.target.closest('.category-tab');
+  if (!btn) return;
+
+  categoryTabs.querySelectorAll('.category-tab').forEach((b) => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeCategory = btn.dataset.category;
   loadProducts(searchInput.value.trim());
 });
 

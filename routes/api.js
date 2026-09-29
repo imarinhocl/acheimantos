@@ -3,31 +3,34 @@ const pool = require('../db/pool');
 
 const router = express.Router();
 
-// GET /api/products?search=flamengo
+const VALID_CATEGORIES = ['brasileirao', 'europa', 'selecoes', 'outros'];
+
+// GET /api/products?search=flamengo&category=brasileirao
 router.get('/products', async (req, res) => {
   const search = (req.query.search || '').trim();
+  const category = VALID_CATEGORIES.includes(req.query.category) ? req.query.category : null;
 
   try {
-    let result;
-    if (search) {
-      result = await pool.query(
-        `SELECT id, name, team, platform, affiliate_url, image_url, price
-         FROM products
-         WHERE active = true
-           AND (name ILIKE $1 OR team ILIKE $1)
-         ORDER BY created_at DESC
-         LIMIT 60`,
-        [`%${search}%`]
-      );
-    } else {
-      result = await pool.query(
-        `SELECT id, name, team, platform, affiliate_url, image_url, price
-         FROM products
-         WHERE active = true
-         ORDER BY created_at DESC
-         LIMIT 60`
-      );
-    }
+    const result = await pool.query(
+      `SELECT
+         p.id, p.name, p.team, p.category, p.image_url, p.price,
+         COALESCE(
+           json_agg(
+             json_build_object('id', pl.id, 'platform', pl.platform)
+             ORDER BY pl.platform
+           ) FILTER (WHERE pl.id IS NOT NULL),
+           '[]'
+         ) AS links
+       FROM products p
+       LEFT JOIN product_links pl ON pl.product_id = p.id
+       WHERE p.active = true
+         AND ($1::text IS NULL OR p.category = $1)
+         AND ($2::text IS NULL OR p.name ILIKE $2 OR p.team ILIKE $2)
+       GROUP BY p.id
+       ORDER BY p.created_at DESC
+       LIMIT 60`,
+      [category, search ? `%${search}%` : null]
+    );
     res.json(result.rows);
   } catch (err) {
     console.error('Erro ao buscar produtos:', err);

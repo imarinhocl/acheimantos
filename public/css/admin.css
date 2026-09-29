@@ -65,6 +65,16 @@
 
 .form-row { display: flex; flex-direction: column; }
 
+.field-hint { color: var(--ink-soft); font-size: 0.85rem; margin: 14px 0 0; }
+
+.clicks-badge {
+  display: inline-block;
+  margin-top: 4px;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
 .product-form { max-width: 480px; }
 
 .report-list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 12px; }

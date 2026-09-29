@@ -52,15 +52,23 @@
         <input type="text" id="team" name="team" placeholder="Ex: Flamengo">
       </div>
       <div class="form-row">
-        <label for="platform">Plataforma</label>
-        <select id="platform" name="platform" required>
-          <option value="mercadolivre">Mercado Livre</option>
-          <option value="shopee">Shopee</option>
+        <label for="category">Categoria</label>
+        <select id="category" name="category">
+          <option value="">Sem categoria</option>
+          <option value="brasileirao">Campeonato Brasileiro</option>
+          <option value="europa">Ligas europeias</option>
+          <option value="selecoes">Seleções</option>
+          <option value="outros">Outros</option>
         </select>
       </div>
+      <p class="field-hint">Preencha o link de pelo menos uma plataforma (pode preencher as duas):</p>
       <div class="form-row">
-        <label for="affiliate_url">Link de afiliado</label>
-        <input type="url" id="affiliate_url" name="affiliate_url" required placeholder="https://...">
+        <label for="mercadolivre_url">Link Mercado Livre</label>
+        <input type="url" id="mercadolivre_url" name="mercadolivre_url" placeholder="https://...">
+      </div>
+      <div class="form-row">
+        <label for="shopee_url">Link Shopee</label>
+        <input type="url" id="shopee_url" name="shopee_url" placeholder="https://...">
       </div>
       <div class="form-row">
         <label for="image_url">URL da imagem</label>
@@ -82,7 +90,13 @@
           <img src="<%= p.image_url %>" alt="<%= p.name %>">
           <div class="admin-product-info">
             <strong><%= p.name %></strong>
-            <span><%= p.team || '—' %> · <%= p.platform %> <%= p.active ? '' : '· inativo' %></span>
+            <span>
+              <%= p.team || '—' %>
+              <% if (p.category) { %> · <%= ({brasileirao:'Brasileirão', europa:'Europa', selecoes:'Seleções', outros:'Outros'})[p.category] %><% } %>
+              <% if (p.links.length > 0) { %> · <%= p.links.map(l => l.platform === 'mercadolivre' ? 'ML' : 'Shopee').join(' + ') %><% } %>
+              <%= p.active ? '' : '· inativo' %>
+            </span>
+            <span class="clicks-badge"><%= p.total_clicks %> clique<%= p.total_clicks === 1 ? '' : 's' %></span>
           </div>
           <div class="admin-product-actions">
             <a class="edit-link" href="/admin/products/<%= p.id %>/edit">Editar</a>
